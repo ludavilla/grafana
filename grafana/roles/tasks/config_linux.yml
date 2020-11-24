@@ -1,0 +1,20 @@
+---
+  - hosts: grafana
+    become: yes
+    become_user: root
+    tasks:
+    - name: Desabilitando o SELinux
+      selinux:
+        state: disabled
+
+    - name: Parando e Desabilitando o firewall
+      systemd:
+        name: firewalld
+        state: stopped
+        enabled: False
+
+    - name: atualizando o S.O.
+      yum:
+        name: '*'
+        state: latest
+        update_cache: yes

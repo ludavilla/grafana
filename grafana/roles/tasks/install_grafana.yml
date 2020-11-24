@@ -1,0 +1,27 @@
+---
+  - hosts: grafana
+    become: yes
+    become_user: root
+    tasks:
+    - name: Copiando repo grafana
+      copy:
+        src: /root/ansible/grafana_prometheus/roles/files/grafana-enterprise.repo
+        dest: /etc/yum.repos.d/
+        src: /root/ansible/grafana_prometheus/roles/files/grafana-oss.repo
+        dest: /etc/yum.repos.d/
+
+    - name: Instalando o grafana
+      yum:
+        name: grafana
+        state: present
+
+    - name: restart daemon-reload e subindo serviço do grafana
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: grafana-server
+
+    - name: Habilitando serviço do grafana
+      systemd:
+        name: grafana-server
+        enabled: yes

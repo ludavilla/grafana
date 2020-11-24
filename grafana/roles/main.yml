@@ -1,0 +1,6 @@
+---
+# tasks file for grafana_prometheus
+#- include: ./tasks/config_linux.yml
+#- include: ./tasks/install_grafana.yml
+- import_playbook: ./tasks/config_linux.yml
+- import_playbook: ./tasks/install_grafana.yml
